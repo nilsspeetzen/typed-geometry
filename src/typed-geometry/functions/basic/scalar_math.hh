@@ -154,9 +154,12 @@ template <class T>
 }
 
 template <class A, class B, class C>
-[[nodiscard]] constexpr auto clamp(A const& a, B const& min_value, C const& max_value) -> decltype(min(max(a, min_value), max_value))
+[[nodiscard]] constexpr auto clamp(A const& a, B const& min_value, C const& max_value) //
+    -> decltype(a < min_value   ? min_value
+                : max_value < a ? max_value
+                                : a)
 {
-    return min(max(a, min_value), max_value);
+    return a < min_value ? min_value : max_value < a ? max_value : a;
 }
 
 template <class T>
